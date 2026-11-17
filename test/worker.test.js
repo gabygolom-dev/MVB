@@ -55,6 +55,30 @@ test("rejeita acesso externo e autoriza apenas a rodada atual", async () => {
   assert.equal(round.posts[1].caption, "Um ✨\n\n#dois");
 });
 
+test("abre o link compartilhado sem fragmento ou sessão prévia", async () => {
+  const path = "/aprovar/" + token;
+  const response = await worker.fetch(new Request(origin + path + "?utm_source=whatsapp", {
+    headers: { Referer: "https://web.whatsapp.com/" },
+  }), {
+    ...env,
+    ASSETS: { fetch(asset) {
+      assert.equal(asset.url, origin + "/index.html");
+      return new Response("painel");
+    } },
+  });
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), "painel");
+  assert.equal(response.headers.get("Referrer-Policy"), "no-referrer");
+  assert.equal(response.headers.get("Cache-Control"), "private, no-store");
+  const cookie = response.headers.get("Set-Cookie");
+  assert.match(cookie, /Secure; HttpOnly; SameSite=Strict/);
+  assert.equal((await request("/api/rodada", { headers: { Cookie: cookie.split(";")[0] } })).status, 200);
+  assert.equal((await request(path, { method: "HEAD" })).headers.get("Set-Cookie"), null);
+  const invalid = await request("/aprovar/" + "b".repeat(64));
+  assert.equal(invalid.status, 404);
+  assert.equal(invalid.headers.get("Set-Cookie"), null);
+});
+
 test("atende HEAD, intervalos de bytes, sufixos e requisições improcedentes", async () => {
   const path = "/midia/rodada-demo/video.mp4";
   const headers = await openSession();

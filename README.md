@@ -15,11 +15,11 @@ O código fica no GitHub. O Worker interno `mvb-aprovacao-arquivos` recebe a con
 
 ## Desenvolvimento e implantação
 
-Use Node 22 ou mais recente e `npm ci`. Execute `npm run check` para rodar os testes do Worker. Para teste local use um token aleatório de 64 caracteres hexadecimais como `PANEL_TOKEN` em `.dev.vars`. Acesse `http://localhost:8787/#TOKEN` depois de preparar o pacote da rodada.
+Use Node 22 ou mais recente e `npm ci`. Execute `npm run check` para rodar os testes do Worker. Para teste local use um token aleatório de 64 caracteres hexadecimais como `PANEL_TOKEN` em `.dev.vars`. Acesse `http://localhost:8787/aprovar/TOKEN` depois de preparar o pacote da rodada.
 
 Para provisionar a produção na conta correta:
 
 1. Faça o primeiro deploy do Worker interno usando o comando da rodada com `--deploy`.
-2. Execute `npm run deploy` para o Worker web. Grave `PANEL_TOKEN` como secret do Worker pelo Cloudflare Dashboard ou com `npx wrangler secret put PANEL_TOKEN`. Pode ser gerado com `openssl rand -hex 32`. O endereço para o cliente é `https://HOST/#TOKEN`. Guarde o token fora do Git. Ele identifica o link e é trocado por um cookie HttpOnly. Para revogar o acesso, altere o secret e distribua o novo link.
+2. Execute `npm run deploy` para o Worker web. Grave `PANEL_TOKEN` como secret do Worker pelo Cloudflare Dashboard ou com `npx wrangler secret put PANEL_TOKEN`. Pode ser gerado com `openssl rand -hex 32`. Envie ao cliente o endereço `https://HOST/aprovar/TOKEN`, que abre diretamente ao ser compartilhado no WhatsApp. Guarde o token fora do Git e mantenha desativados os registros automáticos de requisições e traces nesse Worker. O token identifica o link e é trocado por um cookie HttpOnly. Para revogar o acesso, altere o secret e distribua o novo link.
 3. Em **Workers & Pages → mvb-aprovacao → Settings → Builds → Connect**, autorize o GitHub App da Cloudflare para `gabygolom-dev/MVB` e selecione a branch `main`, a raiz `/` e o comando `npm run deploy`. Use `npm run check` como comando de build e desative os builds de preview se não precisar deles. O Worker interno é publicado pelo comando da rodada, independentemente da atualização do código pelo Git.
 4. Em **Settings → Domains & Routes → Add → Custom Domain**, escolha um hostname de uma zona ativa na mesma conta Cloudflare. O painel também funciona no endereço `workers.dev`. Use sempre o mesmo hostname nos links entregues ao cliente.

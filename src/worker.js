@@ -34,15 +34,19 @@ async function sessionKey(token) {
 
 const sessionMessage = (expires) => encoder.encode(`mvb-view:v1:${expires}`);
 
-async function openSession(request, url, token) {
-  const input = request.headers.get("X-MVB-Link");
-  if (request.headers.get("Origin") !== url.origin || !await sameToken(input, token)) return notFound();
+async function sessionCookie(token) {
   const expires = Math.floor(Date.now() / 1000) + 86400;
   const mac = await crypto.subtle.sign("HMAC", await sessionKey(token), sessionMessage(expires));
   const value = `${expires}.${Array.from(new Uint8Array(mac), (byte) => byte.toString(16).padStart(2, "0")).join("")}`;
+  return `${cookieName}=${value}; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=86400`;
+}
+
+async function openSession(request, url, token) {
+  const input = request.headers.get("X-MVB-Link");
+  if (request.headers.get("Origin") !== url.origin || !await sameToken(input, token)) return notFound();
   return new Response(null, {
     status: 204,
-    headers: { "Set-Cookie": `${cookieName}=${value}; Path=/; Secure; HttpOnly; SameSite=Strict; Max-Age=86400` },
+    headers: { "Set-Cookie": await sessionCookie(token) },
   });
 }
 
@@ -132,6 +136,16 @@ async function route(request, env) {
   }
   if (request.method !== "GET" && request.method !== "HEAD") {
     return new Response(null, { status: 405, headers: { Allow: "GET, HEAD" } });
+  }
+  const share = path.match(/^\/aprovar\/([a-f0-9]{64})\/?$/);
+  if (share) {
+    if (!env.PANEL_TOKEN || !await sameToken(share[1], env.PANEL_TOKEN)) return notFound();
+    const asset = new URL("/index.html", url);
+    const page = await env.ASSETS.fetch(new Request(asset, { method: request.method }));
+    if (!page.ok || request.method === "HEAD") return page;
+    const response = new Response(page.body, page);
+    response.headers.append("Set-Cookie", await sessionCookie(env.PANEL_TOKEN));
+    return response;
   }
   if (path === "/" || publicAssets.has(path)) {
     if (path === "/") url.pathname = "/index.html";
