@@ -11,6 +11,7 @@ const demo = {
   label: "16 a 22 de novembro",
   status: "demo",
   whatsapp: "5548988273434",
+  sizes: { "video.mp4": 10 },
   posts: [
     { number: 1, position: 2, title: "Reel", type: "reel", date: "2026-11-17", cover: "capa.jpg", caption: "Um ✨\n\n#dois", media: [{ file: "video.mp4" }] },
     { number: 2, position: 1, title: "Foto", type: "image", cover: "capa.jpg", caption: "Teste", media: [{ file: "capa.jpg" }] },
@@ -23,7 +24,7 @@ const env = {
     fetch(url, { method } = {}) {
       if (url.endsWith("/rodada-atual.json")) return Response.json(demo);
       if (!url.endsWith("/video.mp4")) return new Response(null, { status: 404 });
-      return new Response(method === "HEAD" ? null : media, { headers: { "Content-Length": "10", ETag: '"abc"' } });
+      return new Response(method === "HEAD" ? null : media, { headers: { ETag: '"abc"' } });
     },
   },
 };

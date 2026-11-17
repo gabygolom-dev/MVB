@@ -18,17 +18,19 @@ try {
   if (folder === bundle) throw new Error("Escolha uma pasta de origem diferente de .rounds/bundle.");
   const config = JSON.parse(await readFile(configFile, "utf8"));
   const files = validateRound(config);
+  const sizes = {};
   for (const name of files) {
     const asset = resolve(mediaFolder, name);
     const info = await stat(asset);
     if (!info.isFile() || !info.size || info.size > maxAssetSize) throw new Error(`${name}: arquivo vazio ou acima de 25 MiB.`);
+    sizes[name] = info.size;
   }
 
   // This directory contains a generated deployment bundle only.
   await rm(bundle, { recursive: true, force: true });
   await mkdir(resolve(bundle, "midia"), { recursive: true });
   for (const name of files) await copyFile(resolve(mediaFolder, name), resolve(bundle, "midia", name));
-  await writeFile(resolve(bundle, basename(CURRENT_ROUND_PATH)), JSON.stringify(config));
+  await writeFile(resolve(bundle, basename(CURRENT_ROUND_PATH)), JSON.stringify({ ...config, sizes }));
 
   console.log(`Rodada ${config.id} validada. ${config.posts.length} publicações e ${files.size} arquivos no pacote privado.`);
   if (option === "--deploy") {

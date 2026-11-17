@@ -94,14 +94,17 @@ function rangeStream(body, offset, length) {
   });
 }
 
-async function deliverMedia(request, content, name) {
+async function deliverMedia(request, content, name, storedSize) {
   const method = request.method;
   const source = await content.fetch(`https://conteudo.interno${contentPath(name)}`, { method });
   if (!source.ok) return notFound();
   const headers = new Headers(source.headers);
   headers.set("Content-Type", mimeType(name));
   headers.set("Accept-Ranges", "bytes");
-  const total = source.headers.get("Content-Length");
+  const total = Number.isSafeInteger(storedSize) && storedSize >= 0
+    ? storedSize
+    : source.headers.has("Content-Length") ? Number(source.headers.get("Content-Length")) : null;
+  if (total !== null) headers.set("Content-Length", String(total));
   const ifRange = request.headers.get("If-Range");
   const range = method === "GET" && total !== null && (!ifRange || ifRange === source.headers.get("ETag"))
     ? parseRange(request.headers.get("Range"), Number(total))
@@ -147,7 +150,7 @@ async function route(request, env) {
   if (!match) return Response.json(publicRound(round));
   const [, id, name] = match;
   if (round.id !== id || !files.has(name)) return notFound();
-  return deliverMedia(request, env.CONTENT, name);
+  return deliverMedia(request, env.CONTENT, name, round.sizes?.[name]);
 }
 
 export default {
