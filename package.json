@@ -1,0 +1,14 @@
+{
+  "name": "mvb-aprovacao",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev -c wrangler.jsonc -c wrangler.conteudo.jsonc",
+    "check": "node --test",
+    "deploy": "wrangler deploy",
+    "rodada:publicar": "node scripts/publish-round.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.160.1"
+  }
+}

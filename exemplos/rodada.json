@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-16-demo",
+  "label": "16 a 22 de novembro de 2026",
+  "status": "demo",
+  "whatsapp": "5548988273434",
+  "logo": "logo.png",
+  "posts": [
+    {
+      "number": 1,
+      "title": "Reel do ripado",
+      "type": "reel",
+      "position": 1,
+      "date": "2026-11-16",
+      "cover": "capa-ripado.jpg",
+      "caption": "Madeira e luz no projeto. ✨\n\n#MVBPlanejados",
+      "media": [{ "drive": "https://drive.google.com/file/d/SUBSTITUA_PELO_ID_DO_VIDEO/view" }]
+    },
+    {
+      "number": 2,
+      "title": "Qual cozinha combina com você?",
+      "type": "carousel",
+      "position": 2,
+      "date": "2026-11-18",
+      "cover": "cozinha-1.jpg",
+      "caption": "Qual é a sua favorita?",
+      "media": [{ "file": "cozinha-1.jpg" }, { "file": "cozinha-2.jpg" }]
+    },
+    {
+      "number": 3,
+      "title": "Detalhe do projeto",
+      "type": "image",
+      "position": 3,
+      "date": "2026-11-20",
+      "cover": "detalhe.jpg",
+      "caption": "Cada detalhe tem um propósito. ✨",
+      "media": [{ "file": "detalhe.jpg" }]
+    }
+  ]
+}

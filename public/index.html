@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#F5F4F1">
+  <title>Aprovação de conteúdo · MVB Planejados</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="site-header"><div class="wrap header-inner">
+    <div class="brand"><span id="brand-mark" class="brand-mark" aria-hidden="true">M</span><span>MVB <span class="brand-sub">Planejados</span></span></div>
+    <button type="button" id="review-link" class="skip-to-review" hidden>Enviar retorno <span aria-hidden="true">↓</span></button>
+  </div></header>
+  <main class="wrap">
+    <section id="status" class="status" aria-live="polite"><h1>Abrindo o painel…</h1><p>Buscando a rodada atual.</p></section>
+    <div id="panel" hidden>
+      <section class="masthead" aria-labelledby="page-title">
+        <div><p class="eyebrow">PAINEL DO CLIENTE</p><h1 id="page-title">Aprovação de conteúdo</h1><p class="intro">Confira as publicações e envie seu retorno para a equipe.</p></div>
+        <div class="edition"><span class="edition-label">Rodada atual</span><strong id="round-label"></strong><span id="round-state"></span></div>
+      </section>
+      <section id="publicacoes" aria-labelledby="posts-heading">
+        <div class="section-bar"><div><h2 id="posts-heading">Publicações</h2><p id="post-count"></p></div>
+        <div class="view-toggle" role="group" aria-label="Visualização das publicações">
+          <button type="button" id="grid-button" aria-controls="grid" aria-pressed="true">Grade</button>
+          <button type="button" id="feed-button" aria-controls="feed" aria-pressed="false">Feed</button>
+        </div></div>
+        <div id="grid" class="post-grid"></div>
+        <div id="feed" class="feed" hidden></div>
+      </section>
+      <section id="resposta" class="review-box" aria-labelledby="review-title">
+        <div><p class="eyebrow">RETORNO DA RODADA</p><h2 id="review-title">Tudo pronto?</h2><p id="review-note">Revise todos os posts antes de aprovar. O retorno é concluído ao tocar em <strong>Enviar</strong> no WhatsApp.</p></div>
+        <div class="review-buttons"><button type="button" id="approve-button" class="primary">Aprovar conteúdos</button><button type="button" id="adjust-button" class="secondary">Solicitar ajuste</button></div>
+      </section>
+    </div>
+  </main>
+  <footer class="wrap site-footer"><span>MVB Planejados</span><span>Aprovação semanal</span></footer>
+  <dialog id="post-dialog" aria-labelledby="post-dialog-title">
+    <div class="dialog-top"><span class="eyebrow" id="post-dialog-type">PUBLICAÇÃO</span><button type="button" class="close icon-button" aria-label="Fechar publicação"></button></div>
+    <div id="post-dialog-content"></div>
+  </dialog>
+  <dialog id="approve-dialog" class="action-dialog" aria-labelledby="approve-title">
+    <div class="dialog-top"><span class="eyebrow">APROVAÇÃO</span><button type="button" class="close icon-button" aria-label="Fechar confirmação"></button></div>
+    <div class="action-content"><h2 id="approve-title">Aprovar a rodada?</h2><p id="approve-copy"></p><ul id="approved-list"></ul><p class="whatsapp-note">Para concluir, toque em <strong>Enviar</strong> no WhatsApp.</p><a id="approve-link" class="primary" target="_blank" rel="noopener noreferrer">Continuar no WhatsApp</a></div>
+  </dialog>
+  <dialog id="adjust-dialog" class="action-dialog" aria-labelledby="adjust-title">
+    <div class="dialog-top"><span class="eyebrow">ALTERAÇÕES</span><button type="button" class="close icon-button" aria-label="Fechar formulário"></button></div>
+    <form id="adjust-form" class="action-content"><h2 id="adjust-title">Solicitar ajuste</h2><p>Selecione a publicação e descreva a alteração.</p><div id="adjust-items"></div><button type="button" id="add-adjust" class="secondary add-adjust">+ Adicionar outro ajuste</button><p class="whatsapp-note">Para concluir, toque em <strong>Enviar</strong> no WhatsApp.</p><button class="primary" type="submit">Continuar no WhatsApp</button></form>
+  </dialog>
+</body>
+</html>
