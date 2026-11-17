@@ -54,8 +54,10 @@ svg{width:18px;height:18px;display:block;flex:none}
 .post-media{min-width:0;background:#ece6df}
 .photo-frame{background:#282424;display:grid;place-items:center;margin:0}
 .photo-frame img{width:100%;max-height:72vh;object-fit:contain}
-.carousel{position:relative;touch-action:pan-y}
-.carousel-controls{display:flex;align-items:center;justify-content:space-between;padding:5px;background:var(--surface);border-top:1px solid var(--edge);color:var(--muted);font-size:13px}
+.post-media:has(>.carousel){background:transparent}
+.carousel{position:relative;touch-action:pan-y;background:transparent}
+.carousel img{height:auto;max-height:none}
+.carousel-controls{display:flex;align-items:center;justify-content:space-between;padding:5px;background:var(--surface);color:var(--muted);font-size:13px}
 .icon-button{display:grid;place-items:center;min-width:43px;min-height:43px;border:0;background:transparent;color:var(--brand);border-radius:6px}
 .icon-button:hover,.icon-button:focus-visible{background:var(--highlight)}
 .icon-button:disabled{opacity:.38;cursor:default}
@@ -84,6 +86,8 @@ dialog{width:min(930px,calc(100% - 36px));padding:0;border:1px solid var(--edge)
 dialog::backdrop{background:#231b1ce0}
 body:has(dialog[open]){overflow:hidden}
 .dialog-top{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:center;background:var(--surface);border-bottom:1px solid var(--edge);padding:4px 9px 4px 17px}
+#post-dialog:has(.carousel){border:0;border-radius:0}
+#post-dialog:has(.carousel) .dialog-top{border-bottom:0}
 .dialog-top .eyebrow{margin:0}
 .action-dialog{width:min(530px,calc(100% - 32px))}
 .action-content{padding:22px 25px 25px}
@@ -112,6 +116,7 @@ body:has(dialog[open]){overflow:hidden}
   .review-box{padding:19px;gap:15px;margin:24px 0}
   .video-stage{width:min(100%,43vh)}
   dialog{width:calc(100% - 20px)}
+  #post-dialog:has(.carousel){width:100%;max-width:none}
 }
 @media(max-width:370px){.view-toggle button{padding-inline:7px}.wrap{width:calc(100% - 24px)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
