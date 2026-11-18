@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import worker, { parseRange } from "../src/worker.js";
-import { driveLinks, validateRound } from "../src/round.js";
+import { driveLinks, publicRound, validateRound } from "../src/round.js";
 
 const origin = "https://painel.example";
 const token = "a".repeat(64);
@@ -77,6 +77,18 @@ test("abre o link compartilhado sem fragmento ou sessão prévia", async () => {
   const invalid = await request("/aprovar/" + "b".repeat(64));
   assert.equal(invalid.status, 404);
   assert.equal(invalid.headers.get("Set-Cookie"), null);
+});
+
+test("permite MP4 nativo e link alternativo do Drive no mesmo Reel", () => {
+  const drive = "https://drive.google.com/file/d/abcdefghijklmnopqrst/view";
+  const post = demo.posts[0];
+  const round = { ...demo, posts: [{ ...post, media: [{ file: "video.mp4", drive }] }] };
+  assert.ok(validateRound(round).has("video.mp4"));
+  assert.deepEqual(publicRound(round).posts[0].media[0], {
+    src: "/midia/rodada-demo/video.mp4",
+    alt: post.title,
+    ...driveLinks(drive),
+  });
 });
 
 test("atende HEAD, intervalos de bytes, sufixos e requisições improcedentes", async () => {

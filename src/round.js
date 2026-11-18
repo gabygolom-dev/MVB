@@ -90,8 +90,9 @@ export function validateRound(round) {
     if (!Array.isArray(post.media)) continue;
     for (const [mediaIndex, item] of post.media.entries()) {
       if (post.type === "reel" && item?.drive != null) {
-        if (item.file != null || !driveLinks(item.drive)) errors.push(`${label}: forneça o link de compartilhamento de um arquivo de vídeo do Google Drive.`);
-      } else {
+        if (!driveLinks(item.drive)) errors.push(`${label}: forneça o link de compartilhamento de um arquivo de vídeo do Google Drive.`);
+      }
+      if (post.type !== "reel" || item?.drive == null || item.file != null) {
         addFile(item?.file, post.type === "reel" ? mp4Types : imageTypes, `${label}, mídia ${mediaIndex + 1}`);
       }
       if (item?.alt != null && typeof item.alt !== "string") errors.push(`${label}: o texto alternativo deve ser um texto.`);
@@ -116,7 +117,10 @@ export function publicRound(round) {
       caption: post.caption,
       date: post.date ?? null,
       cover: mediaUrl(round, post.cover),
-      media: post.media.map(({ file, alt, drive }) => drive ? driveLinks(drive) : { src: mediaUrl(round, file), alt: alt || post.title }),
+      media: post.media.map(({ file, alt, drive }) => ({
+        ...(file ? { src: mediaUrl(round, file), alt: alt || post.title } : {}),
+        ...(drive ? driveLinks(drive) : {}),
+      })),
     })),
   };
 }

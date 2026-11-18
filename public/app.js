@@ -51,7 +51,7 @@ function reel(post) {
   const container = el("div", "post-media reel");
   const stage = el("div", "video-stage");
   container.append(stage);
-  if (item.preview) {
+  if (item.external) {
     const fallback = el("p", "reel-help", "Se o player não abrir, ");
     const link = el("a", "", "Abrir no Drive");
     link.href = item.external;
@@ -59,7 +59,9 @@ function reel(post) {
     link.rel = "noopener noreferrer";
     fallback.append(link);
     container.append(fallback);
+  }
 
+  if (!item.src) {
     function showPoster() {
       const cover = picture(post.cover, "", false);
       cover.className = "reel-poster";
@@ -93,9 +95,11 @@ function reel(post) {
     video.poster = post.cover;
     video.src = item.src;
     video.setAttribute("aria-label", post.label);
+    const pause = () => video.pause();
     video.addEventListener("play", () => {
+      if (activePlayer === pause) return;
       releasePlayer();
-      activePlayer = () => video.pause();
+      activePlayer = pause;
     });
     video.addEventListener("error", () => {
       if (!container.querySelector(".reel-help")) container.append(el("p", "reel-help", "Não foi possível reproduzir. Peça à equipe um MP4 compatível ou um link compartilhável do Drive."));
