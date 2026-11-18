@@ -50,6 +50,11 @@
     ['cozinha-amadeirada', 'Cozinha com armários amadeirados', 'Cozinha com armários inferiores amadeirados e iluminação sobre a bancada', '55%'],
     ['ambiente-6120', 'Cozinha integrada com ilha', 'Cozinha integrada com ilha clara, prateleira suspensa e armários em tom terroso', '59%'],
     ['ambiente-6078', 'Detalhes da cozinha integrada', 'Armários planejados em tons terrosos e claros ao redor da pia e do forno', '54%'],
+    ['cozinha-azul-madeira', 'Cozinha em azul e madeira', 'Armários azuis com acabamento amadeirado e nichos abertos para louças', '50%'],
+    ['escrivaninha-amadeirada', 'Escrivaninha planejada', 'Bancada de madeira com gavetas embutidas e cadeira de escritório', '79%'],
+    ['cozinha-aberta-sala', 'Cozinha aberta para a sala', 'Cozinha com armários claros, prateleiras suspensas e bancada ripada atrás do sofá', '57%'],
+    ['sala-painel-tv', 'Painel de TV na sala', 'Painel claro para TV e rack amadeirado com nichos e portas espelhadas', '56%'],
+    ['escritorio-gaveteiro', 'Escritório com gaveteiro', 'Escritório com bancada escura em L e gavetas com puxadores metálicos', '69%'],
   ];
   const gallery = document.querySelector('.gallery');
   const image = document.querySelector('#gallery-photo');
