@@ -15,7 +15,7 @@
   <link rel="preload" href="https://scripts.trackplay.io/7745cbdd-20ee-497f-9b0e-b166b9872095/b2103a90-a497-43c6-bbc1-330807f0adf4.js" as="script">
   <link rel="preload" href="https://scripts.trackplay.io/b2103a90-a497-43c6-bbc1-330807f0adf4/portrait.jpg" as="image">
   <link rel="stylesheet" href="styles.css?v=whatsapp">
-  <script defer src="app.js?v=whatsapp"></script>
+  <script defer src="app.js?v=sheets"></script>
 </head>
 <body id="inicio">
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
@@ -60,13 +60,13 @@
             <h3 id="contact-title" class="form-step-title" tabindex="-1" aria-describedby="form-step-label">Seus dados de contato</h3>
             <div class="form-grid">
               <label>Nome
-                <input id="nome" autocomplete="name" name="nome" placeholder="Seu nome" required>
+                <input id="nome" autocomplete="name" name="nome" maxlength="120" placeholder="Seu nome" required>
               </label>
               <label>WhatsApp
-                <input autocomplete="tel-national" type="tel" inputmode="tel" name="whatsapp" placeholder="(00) 00000-0000" required>
+                <input autocomplete="tel-national" type="tel" inputmode="tel" name="whatsapp" maxlength="40" placeholder="(00) 00000-0000" required>
               </label>
               <label class="full">Cidade
-                <input autocomplete="address-level2" name="cidade" placeholder="Cidade do projeto" required>
+                <input autocomplete="address-level2" name="cidade" maxlength="120" placeholder="Cidade do projeto" required>
               </label>
             </div>
             <div class="form-actions">
@@ -80,7 +80,7 @@
             <h3 id="details-title" class="form-step-title" tabindex="-1" aria-describedby="form-step-label">Sobre seu projeto</h3>
             <div class="form-grid">
               <label class="full">Quais ambientes deseja planejar?
-                <textarea name="ambientes" rows="2" placeholder="Ex.: cozinha e sala" required></textarea>
+                <textarea name="ambientes" maxlength="2000" rows="2" placeholder="Ex.: cozinha e sala" required></textarea>
               </label>
               <label><span id="label-prazo">Quando pretende iniciar o projeto?</span>
                 <select name="prazo" aria-labelledby="label-prazo" required>
@@ -111,8 +111,8 @@
             </div>
           </fieldset>
           <div id="form-complete" class="form-complete" hidden>
-            <h3 id="complete-title" class="form-step-title" tabindex="-1">Vamos conversar sobre seu projeto?</h3>
-            <p>Continue no WhatsApp para enviar suas respostas à equipe da MVB.</p>
+            <h3 id="complete-title" class="form-step-title" tabindex="-1">Seu projeto foi enviado!</h3>
+            <p>Recebemos suas respostas! Continue no WhatsApp para conversar com a equipe da MVB.</p>
             <a id="whatsapp-link" class="button" href="https://wa.me/5513988030103" target="_blank" rel="noopener noreferrer">
               Falar com a equipe no WhatsApp
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>

@@ -7,6 +7,13 @@
   const complete = document.querySelector('#form-complete');
   const whatsapp = document.querySelector('#whatsapp-link');
 
+  // Public, append-only Google Apps Script endpoint; no credentials in the browser.
+  const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz8lACQni2h95TEnQzNhxnBAXZOMYvoZ51f7W5OyYxday6Vt3AkDVg0speZimvEHdPr7Q/exec';
+  const submitButton = detailsStep.querySelector('[type="submit"]');
+  const backButton = document.querySelector('#back-step');
+  let pendingReceipt = null;
+  let lastSubmission = null;
+
   function showFormStep(showDetails) {
     contactStep.hidden = contactStep.disabled = showDetails;
     detailsStep.hidden = detailsStep.disabled = !showDetails;
@@ -17,31 +24,104 @@
     step.querySelector('.form-step-title').focus();
   }
 
-  form.addEventListener('submit', (event) => {
+  window.addEventListener('message', (event) => {
+    if (!/^https:\/\/(?:script\.google\.com|[a-z0-9-]+\.googleusercontent\.com)$/.test(event.origin)) return;
+    const data = event.data;
+    if (!pendingReceipt || !data || data.type !== 'mvb-lead-receipt' ||
+        data.requestId !== pendingReceipt.requestId) return;
+    pendingReceipt.finish(data.ok === true);
+  });
+
+  function saveLead(payload) {
+    return new Promise((resolve, reject) => {
+      const frame = document.createElement('iframe');
+      frame.name = `mvb-lead-${payload.requestId}`;
+      frame.hidden = true;
+      frame.title = 'Envio do formulário';
+      const transport = document.createElement('form');
+      transport.hidden = true;
+      transport.method = 'POST';
+      transport.action = LEADS_ENDPOINT;
+      transport.target = frame.name;
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'payload';
+      input.value = JSON.stringify(payload);
+      transport.append(input);
+      let finished = false;
+      const finish = (ok) => {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timer);
+        pendingReceipt = null;
+        transport.remove();
+        frame.remove();
+        if (ok) resolve();
+        else reject(new Error('Não foi possível confirmar o envio.'));
+      };
+      const timer = setTimeout(() => finish(false), 45000);
+      pendingReceipt = { requestId: payload.requestId, finish };
+      document.body.append(frame, transport);
+      try { transport.submit(); } catch (error) { finish(false); }
+    });
+  }
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (pendingReceipt) return;
     if (!contactStep.hidden) {
       showFormStep(true);
       return;
     }
     const value = (name) => form.elements.namedItem(name).value.trim();
-    const budget = form.elements.namedItem('orcamento').selectedOptions[0].textContent;
-    const message = [
-      'Olá, equipe MVB! Preenchi o formulário do site e quero conversar sobre meu projeto.',
-      '',
-      `Nome: ${value('nome')}`,
-      `WhatsApp: ${value('whatsapp')}`,
-      `Cidade: ${value('cidade')}`,
-      `Ambientes: ${value('ambientes')}`,
-      `Quando pretendo iniciar: ${value('prazo')}`,
-      `Orçamento: ${budget}`,
-    ].join('\n');
-    whatsapp.href = `https://wa.me/5513988030103?text=${encodeURIComponent(message)}`;
-    detailsStep.hidden = detailsStep.disabled = true;
-    complete.hidden = false;
-    status.textContent = '';
-    document.querySelector('#complete-title').focus();
+    const answers = {
+      nome: value('nome'), whatsapp: value('whatsapp'), cidade: value('cidade'),
+      ambientes: value('ambientes'), prazo: value('prazo'),
+      orcamento: form.elements.namedItem('orcamento').selectedOptions[0].textContent.trim(),
+    };
+    if (Object.values(answers).some((answer) => !answer)) {
+      status.textContent = 'Preencha todos os campos antes de continuar.';
+      return;
+    }
+    const fingerprint = JSON.stringify(answers);
+    if (!lastSubmission || lastSubmission.fingerprint !== fingerprint) {
+      lastSubmission = { fingerprint, requestId: crypto.randomUUID(), saved: false };
+    }
+    if (!LEADS_ENDPOINT) {
+      status.textContent = 'O formulário está sendo configurado. Tente novamente em instantes.';
+      return;
+    }
+    submitButton.disabled = backButton.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    status.textContent = 'Enviando suas respostas…';
+    try {
+      if (!lastSubmission.saved) {
+        await saveLead({ ...answers, requestId: lastSubmission.requestId, origin: location.origin });
+        lastSubmission.saved = true;
+      }
+      const message = [
+        'Olá, equipe MVB! Preenchi o formulário do site e quero conversar sobre meu projeto.',
+        '',
+        `Nome: ${answers.nome}`,
+        `WhatsApp: ${answers.whatsapp}`,
+        `Cidade: ${answers.cidade}`,
+        `Ambientes: ${answers.ambientes}`,
+        `Quando pretendo iniciar: ${answers.prazo}`,
+        `Orçamento: ${answers.orcamento}`,
+      ].join('\n');
+      whatsapp.href = `https://wa.me/5513988030103?text=${encodeURIComponent(message)}`;
+      detailsStep.hidden = detailsStep.disabled = true;
+      complete.hidden = false;
+      status.textContent = '';
+      document.querySelector('#complete-title').focus();
+    } catch (error) {
+      status.textContent = 'Não conseguimos confirmar o envio. Suas respostas continuam aqui. Tente novamente.';
+    } finally {
+      submitButton.disabled = backButton.disabled = false;
+      form.removeAttribute('aria-busy');
+    }
   });
-  document.querySelector('#back-step').addEventListener('click', () => showFormStep(false));
+  backButton.addEventListener('click', () => showFormStep(false));
   document.querySelector('#edit-project').addEventListener('click', () => showFormStep(true));
   document.querySelector('#continue-step').disabled = false;
 
