@@ -4,13 +4,15 @@
   const contactStep = document.querySelector('#contact-step');
   const detailsStep = document.querySelector('#details-step');
   const stepLabel = document.querySelector('#form-step-label');
-  const previewMessage = 'Formulário em modo de prévia. O envio ainda não está ativo.';
+  const complete = document.querySelector('#form-complete');
+  const whatsapp = document.querySelector('#whatsapp-link');
 
   function showFormStep(showDetails) {
     contactStep.hidden = contactStep.disabled = showDetails;
     detailsStep.hidden = detailsStep.disabled = !showDetails;
+    complete.hidden = true;
     stepLabel.textContent = showDetails ? 'Etapa 2 de 2' : 'Etapa 1 de 2';
-    status.textContent = previewMessage;
+    status.textContent = '';
     const step = showDetails ? detailsStep : contactStep;
     step.querySelector('.form-step-title').focus();
   }
@@ -21,11 +23,27 @@
       showFormStep(true);
       return;
     }
-    status.textContent = 'Campos preenchidos. Nenhum dado foi enviado nesta prévia.';
+    const value = (name) => form.elements.namedItem(name).value.trim();
+    const budget = form.elements.namedItem('orcamento').selectedOptions[0].textContent;
+    const message = [
+      'Olá, equipe MVB! Preenchi o formulário do site e quero conversar sobre meu projeto.',
+      '',
+      `Nome: ${value('nome')}`,
+      `WhatsApp: ${value('whatsapp')}`,
+      `Cidade: ${value('cidade')}`,
+      `Ambientes: ${value('ambientes')}`,
+      `Quando pretendo iniciar: ${value('prazo')}`,
+      `Orçamento: ${budget}`,
+    ].join('\n');
+    whatsapp.href = `https://wa.me/5513988030103?text=${encodeURIComponent(message)}`;
+    detailsStep.hidden = detailsStep.disabled = true;
+    complete.hidden = false;
+    status.textContent = '';
+    document.querySelector('#complete-title').focus();
   });
   document.querySelector('#back-step').addEventListener('click', () => showFormStep(false));
+  document.querySelector('#edit-project').addEventListener('click', () => showFormStep(true));
   document.querySelector('#continue-step').disabled = false;
-  status.textContent = previewMessage;
 
   if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const reveal = new IntersectionObserver((entries, observer) => {

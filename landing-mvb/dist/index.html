@@ -14,8 +14,8 @@
   <link rel="dns-prefetch" href="https://secure.trackplay.io">
   <link rel="preload" href="https://scripts.trackplay.io/7745cbdd-20ee-497f-9b0e-b166b9872095/b2103a90-a497-43c6-bbc1-330807f0adf4.js" as="script">
   <link rel="preload" href="https://scripts.trackplay.io/b2103a90-a497-43c6-bbc1-330807f0adf4/portrait.jpg" as="image">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="styles.css?v=whatsapp">
+  <script defer src="app.js?v=whatsapp"></script>
 </head>
 <body id="inicio">
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
@@ -110,8 +110,17 @@
               </button>
             </div>
           </fieldset>
+          <div id="form-complete" class="form-complete" hidden>
+            <h3 id="complete-title" class="form-step-title" tabindex="-1">Vamos conversar sobre seu projeto?</h3>
+            <p>Continue no WhatsApp para enviar suas respostas à equipe da MVB.</p>
+            <a id="whatsapp-link" class="button" href="https://wa.me/5513988030103" target="_blank" rel="noopener noreferrer">
+              Falar com a equipe no WhatsApp
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+            </a>
+            <button id="edit-project" class="form-back" type="button">Revisar respostas</button>
+          </div>
           <p class="form-status" id="form-status" role="status"></p>
-          <noscript><p class="form-status">Formulário em modo de prévia. O envio ainda não está ativo.</p></noscript>
+          <noscript><p class="form-status">Ative o JavaScript para preencher o formulário.</p></noscript>
         </form>
       </div>
     </section>

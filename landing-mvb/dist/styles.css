@@ -157,6 +157,9 @@ mark {
 .form-back:hover { background: var(--sand); }
 .form-status { margin-top: 12px; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .form-status:empty { display: none; }
+.form-complete > p { color: var(--muted); font-size: 16px; line-height: 1.6; text-wrap: pretty; }
+.form-complete .button { width: 100%; margin-top: 23px; }
+.form-complete .form-back { margin-top: 14px; }
 .heritage-grid { display: grid; grid-template-columns: minmax(0, .87fr) minmax(0, 1.13fr); gap: clamp(36px, 7vw, 108px); align-items: center; }
 .heritage h2 { font-size: clamp(43px, 4.45vw, 66px); }
 .heritage strong { color: var(--ink); font-weight: 780; }
