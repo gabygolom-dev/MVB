@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Móveis planejados na Baixada Santista. Conheça a MVB e conte para nossa equipe o que você deseja planejar.">
+  <meta name="theme-color" content="#f8f5ef">
+  <title>MVB · Ambientes Planejados</title>
+  <link rel="icon" href="assets/simbolo-mvb.png" type="image/png">
+  <link rel="preload" href="assets/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body id="inicio">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="#inicio" class="brand" aria-label="MVB Ambientes Planejados, início">
+        <img src="assets/marca-mvb.png" width="297" height="99" alt="MVB Ambientes Planejados">
+      </a>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <h1 id="hero-title">Vai&nbsp;fazer <mark>móveis&nbsp;planejados?</mark></h1>
+        <p class="hero-sub">Assista a esse vídeo&nbsp;<span class="underline">antes.</span></p>
+
+        <!-- Quando a VSL estiver pronta, substitua .video-placeholder pelo player dentro de #vsl. -->
+        <div id="vsl" class="video-frame" aria-label="Vídeo da MVB">
+          <div class="video-placeholder">
+            <svg class="blueprint" viewBox="0 0 1000 563" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <path d="M-50 420 416 89l634 224M-73 507 415 213l636 173M0 562l414-210 599 110M416 89v263M112 305v122m83-181v138m99-208v155m437-131v220m127-176v209M416 89V-40M730 200V45M857 245V90M0 421l0 86M570 144v248M935 270v179" />
+              <path d="M0 85h1000M0 478h1000M93 0v563M907 0v563" class="construction"/>
+            </svg>
+            <span class="video-corner top-left" aria-hidden="true"></span>
+            <span class="video-corner top-right" aria-hidden="true"></span>
+            <span class="video-corner bottom-left" aria-hidden="true"></span>
+            <span class="video-corner bottom-right" aria-hidden="true"></span>
+            <div class="video-state">
+              <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5.5 19.5 12 9 18.5z" fill="currentColor"/></svg></span>
+              <span class="eyebrow">Vídeo em breve</span>
+            </div>
+          </div>
+        </div>
+        <div class="video-caption">
+          <a href="#projeto">Conte sobre seu projeto <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="projeto" class="project section" aria-labelledby="project-title">
+      <div class="wrap project-grid">
+        <div class="section-copy">
+          <h2 id="project-title">Vamos tirar seu <mark>projeto do papel?</mark></h2>
+          <p>Conte para a MVB quais ambientes você deseja planejar. Nossa equipe vai conhecer suas necessidades e entrar em contato para conversar sobre seu projeto.</p>
+        </div>
+        <form class="project-form" id="project-form" aria-labelledby="project-title">
+          <div class="form-progress">
+            <p id="form-step-label">Etapa 1 de 2</p>
+            <div class="progress-segments" aria-hidden="true"><span></span><span></span></div>
+          </div>
+          <fieldset class="form-step" id="contact-step" aria-labelledby="contact-title">
+            <h3 id="contact-title" class="form-step-title" tabindex="-1" aria-describedby="form-step-label">Seus dados de contato</h3>
+            <div class="form-grid">
+              <label>Nome
+                <input id="nome" autocomplete="name" name="nome" placeholder="Seu nome" required>
+              </label>
+              <label>WhatsApp
+                <input autocomplete="tel-national" type="tel" inputmode="tel" name="whatsapp" placeholder="(00) 00000-0000" required>
+              </label>
+              <label class="full">Cidade
+                <input autocomplete="address-level2" name="cidade" placeholder="Cidade do projeto" required>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="button form-button" id="continue-step" type="submit" disabled>
+                Continuar
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+              </button>
+            </div>
+          </fieldset>
+          <fieldset class="form-step" id="details-step" aria-labelledby="details-title" hidden disabled>
+            <h3 id="details-title" class="form-step-title" tabindex="-1" aria-describedby="form-step-label">Sobre seu projeto</h3>
+            <div class="form-grid">
+              <label class="full">Quais ambientes deseja planejar?
+                <textarea name="ambientes" rows="2" placeholder="Ex.: cozinha e sala" required></textarea>
+              </label>
+              <label><span id="label-prazo">Quando pretende iniciar o projeto?</span>
+                <select name="prazo" aria-labelledby="label-prazo" required>
+                  <option value="" disabled selected>Selecione um prazo</option>
+                  <option>Assim que possível</option>
+                  <option>Em até 3 meses</option>
+                  <option>Entre 3 e 6 meses</option>
+                  <option>Daqui a mais de 6 meses</option>
+                  <option>Ainda não defini</option>
+                </select>
+              </label>
+              <label>Qual o orçamento disponível para esse projeto?
+                <input name="orcamento" placeholder="Ex.: R$ 25.000 ou a definir" required>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="form-back" id="back-step" type="button">← Voltar</button>
+              <button class="button form-button" type="submit">
+                Quero começar meu projeto
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+              </button>
+            </div>
+          </fieldset>
+          <p class="form-status" id="form-status" role="status"></p>
+          <noscript><p class="form-status">Formulário em modo de prévia. O envio ainda não está ativo.</p></noscript>
+        </form>
+      </div>
+    </section>
+
+    <section id="ambientes" class="heritage section" aria-labelledby="heritage-title">
+      <div class="wrap heritage-grid">
+        <div class="section-copy">
+          <h2 id="heritage-title">Há <span class="underline">mais de 30&nbsp;anos</span>, a Baixada&nbsp;Santista confia na MVB para planejar seus&nbsp;ambientes.</h2>
+          <p>Unimos décadas de <strong>experiência</strong>, <strong>consultoria personalizada</strong> e <strong>tecnologia</strong> para desenvolver móveis planejados com alto padrão de qualidade.</p>
+          <p>Nossa produção utiliza processos industriais computadorizados, que permitem executar projetos com <span class="underline">precisão&nbsp;milimétrica</span> e <span class="underline">atenção aos&nbsp;detalhes</span> de acabamento.</p>
+        </div>
+        <div class="gallery" role="region" aria-label="Fotos de ambientes da MVB" aria-roledescription="carrossel">
+          <div class="gallery-image" id="gallery-window">
+            <img id="gallery-photo" src="assets/varanda-gourmet.webp" width="1088" height="1450" alt="Varanda gourmet com armários claros, nicho iluminado e churrasqueira embutida" loading="lazy">
+            <span class="gallery-index" id="gallery-index" aria-hidden="true">01 / 07</span>
+          </div>
+          <div class="gallery-controls">
+            <p class="gallery-caption" aria-live="polite" aria-atomic="true">
+              <span class="gallery-label">Ambientes MVB</span>
+              <span id="gallery-name">Varanda gourmet <span class="sr-only">(foto 1 de 7)</span></span>
+            </p>
+            <div class="gallery-arrows" hidden>
+              <button class="arrow" type="button" id="prev-photo" aria-controls="gallery-window" aria-label="Foto anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5m6 6-6-6 6-6"/></svg></button>
+              <button class="arrow" type="button" id="next-photo" aria-controls="gallery-window" aria-label="Próxima foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits section" aria-labelledby="benefits-title">
+      <div class="wrap">
+        <div class="section-copy benefits-intro">
+          <p class="eyebrow">Garantia, pós-venda e pagamento</p>
+          <h2 id="benefits-title"><span>Mais segurança para&nbsp;investir.</span> <span>Mais <span class="underline">facilidade</span> para&nbsp;realizar.</span></h2>
+          <p>Além de móveis planejados de qualidade, a MVB oferece condições e benefícios para você realizar seu projeto com mais tranquilidade.</p>
+        </div>
+        <ul class="benefit-grid">
+          <li class="benefit">
+            <h3>5 anos de&nbsp;garantia</h3>
+            <p>Mais segurança para investir nos móveis da sua casa.</p>
+          </li>
+          <li class="benefit">
+            <h3>Acompanhamento&nbsp;pós&#8209;venda</h3>
+            <p>Nossa equipe continua presente após a instalação, acompanhando sua experiência com os novos ambientes.</p>
+          </li>
+          <li class="benefit">
+            <h3>Condições facilitadas de&nbsp;pagamento</h3>
+            <p>Parcele seu projeto em <strong>até 24 vezes no boleto</strong> ou <strong>até 21 vezes no cartão.</strong></p>
+          </li>
+        </ul>
+        <p class="payment-note">Parcelamento no boleto sujeito à análise de crédito, com primeira parcela para até 90 dias. Parcelamento no cartão conforme liberação da administradora.</p>
+      </div>
+    </section>
+
+    <section class="closing section" aria-labelledby="closing-title">
+      <div class="wrap closing-inner">
+        <p class="eyebrow">Planeje com a MVB</p>
+        <h2 id="closing-title">Seu projeto merece a experiência de quem entende de móveis&nbsp;planejados <span class="underline">há mais de 30&nbsp;anos.</span></h2>
+        <p>Seja para mobiliar um imóvel novo ou renovar seus ambientes, conte com a MVB para desenvolver um projeto com qualidade e atendimento personalizado.</p>
+        <p class="closing-invite">Dê o primeiro passo para realizar seu projeto.</p>
+        <a href="#projeto" class="button button-light">
+          Quero falar com a MVB
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a href="#inicio" class="brand" aria-label="MVB Ambientes Planejados, voltar ao início"><img src="assets/marca-mvb.png" width="297" height="99" alt="MVB Ambientes Planejados" loading="lazy"></a>
+      <span>Baixada Santista · SP</span>
+    </div>
+  </footer>
+</body>
+</html>
