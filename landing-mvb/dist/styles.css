@@ -106,38 +106,6 @@ mark {
   width: min(100%, 320px); aspect-ratio: 9 / 16; margin-inline: auto;
   background: #2c211d; box-shadow: 0 13px 35px #4d26131a;
 }
-.video-frame > :is(iframe, video) { display: block; border: 0; width: 100%; height: 100%; }
-.video-placeholder {
-  width: 100%; height: 100%; position: relative; isolation: isolate;
-  display: grid; place-items: center; overflow: hidden;
-  background: radial-gradient(ellipse at 51% 50%, #58403a 0%, #392822 49%, #261b17 100%);
-  color: #fff5e9;
-}
-.video-placeholder::before {
-  content: ""; position: absolute; z-index: -1; inset: 0;
-  background: repeating-linear-gradient(0deg, #f4d6b716 0 1px, transparent 1px 38px),
-              repeating-linear-gradient(90deg, #f4d6b716 0 1px, transparent 1px 38px);
-  mask-image: radial-gradient(ellipse at center, transparent 15%, black 95%);
-}
-.blueprint { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; fill: none; stroke: #ead1b7; stroke-width: 1.05; opacity: .27; }
-.blueprint .construction { stroke-dasharray: 3 6; opacity: .68; }
-.video-corner {
-  --inset: clamp(10px, 2vw, 23px);
-  width: 16px; height: 16px; position: absolute; border: 0 solid #ead1b7a0;
-}
-.video-corner.top-left { top: var(--inset); left: var(--inset); border-top-width: 1px; border-left-width: 1px; }
-.video-corner.top-right { top: var(--inset); right: var(--inset); border-top-width: 1px; border-right-width: 1px; }
-.video-corner.bottom-left { bottom: var(--inset); left: var(--inset); border-bottom-width: 1px; border-left-width: 1px; }
-.video-corner.bottom-right { bottom: var(--inset); right: var(--inset); border-bottom-width: 1px; border-right-width: 1px; }
-.video-state { display: grid; justify-items: center; gap: clamp(11px, 2vw, 19px); }
-.video-state .eyebrow { margin: 0; color: #fff5e9; text-shadow: 0 1px 5px #221510; }
-.video-state .eyebrow::before { display: none; }
-.play {
-  width: clamp(47px, 6vw, 77px); aspect-ratio: 1; border-radius: 50%;
-  display: grid; place-items: center; background: var(--red); border: 1px solid #ffede970;
-  box-shadow: 0 0 0 9px #2a171c69;
-}
-.play svg { width: 38%; }
 .video-caption { margin: 9px auto 0; font-size: 13px; line-height: 1.4; }
 .video-caption a { min-height: 44px; }
 .section { padding-block: var(--space); }
