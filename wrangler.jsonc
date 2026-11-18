@@ -3,7 +3,7 @@
   "name": "mvb-aprovacao",
   "main": "src/worker.js",
   "compatibility_date": "2026-11-17",
-  "workers_dev": true,
+  "workers_dev": false,
   "preview_urls": false,
   "assets": {
     "directory": "./public",

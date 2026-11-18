@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "wrangler dev -c wrangler.jsonc -c wrangler.conteudo.jsonc",
     "check": "node --test",
-    "deploy": "wrangler deploy",
     "rodada:publicar": "node scripts/publish-round.mjs"
   },
   "devDependencies": {
